@@ -2,6 +2,7 @@
 
 ## Proyecto Spring Boot diseñado para acortar URLs. 
 
+
 Consta de una API REST más una BD Redis que permite:
 
 - Acortar URLs
@@ -12,24 +13,27 @@ Consta de una API REST más una BD Redis que permite:
 
 
 
-### Siendo que en términos de rendimiento se busca contar con: 
+
+### Siendo que en términos de rendimiento se busca contar con...
 
 - Una alta disponibilidad con picos de tráfico de hasta 1 M RPM con un tiempo de actividad de hasta el 99,98%
 - Una resolución de URLs con baja latencia
 - Estadísticas en tiempo casi real
 
-  se optó por utilizar **Redis** por tratarse de una base de datos que opera en memoria y que por ende ofrece  tiemṕos de respuesta en el reango de milisegundos. Por otra parte Redis es muy eficiente al momento de almacenar pares de clave-valor (los mapeos entre *shortURL* y *longURL*). A su vez el soporte de estadísticas en tiempo real es una caracteristica de la base de datos elegida.
+ ... se optó por utilizar **Redis** por tratarse de una base de datos que opera en memoria y que por ende ofrece  tiemṕos de respuesta en el reango de milisegundos. Por otra parte Redis es muy eficiente al momento de almacenar pares de clave-valor (los mapeos entre *shortURL* y *longURL*). A su vez el soporte de estadísticas en tiempo real es una caracteristica de la base de datos elegida.
 
   Se descartó el uso de una BD relacional por ofrecer un rendimiento inferior en altas cargas de datos y por ser tecnologías convenientes para el manejo de relaciones complejas entre tablas, algo innecesario en el contexto del proyecto.
 
 
 
+
   ## Componentes que integran la solución
 
-- API REST que acorta, redirige, administra y obtiene estadísticas de las URLS. Se optó por una API por ofrecer una interfaz sencilla para que clientes externos interactúen con el sistema.
-- Base de Datos Redis que almacena pares clave-valor, sirve datos para resolución rápida de URLs y gestiona estadísticas en tiempo real.
+- **API REST** que acorta, redirige, administra y obtiene estadísticas de las URLS. Se optó por una API por ofrecer una interfaz sencilla para que clientes externos interactúen con el sistema.
+- **Base de Datos Redis** que almacena pares clave-valor, sirve datos para resolución rápida de URLs y gestiona estadísticas en tiempo real.
 
   ![diagrama](https://github.com/user-attachments/assets/6d4125f4-6f02-4b5a-8059-45d0dd6bb8d4)
+
 
 
 
@@ -42,6 +46,7 @@ Consta de una API REST más una BD Redis que permite:
   5) Por último, podés probar las métricas del proyecto parándote en /urlshortener/src/load-tests y corriendo el comando k6 run load-test.js
 
 
+
  
 ### Interactuando con Redis
 
@@ -50,6 +55,7 @@ En una nueva termina ejecutá el comando `redi-cli` para trabajar directamente c
 - `FLUSHALL`: vacía la base de datos
 - `keys *` te devuelve todas las claves existentes
 - `get url:{shortUrl}` ver con contenido de alguna clave en particular 
+
 
 
 ### Comandos cURL para probar la API
@@ -65,12 +71,14 @@ curl -X 'POST' \
 }'
 ```
 
+
 - Redireccionar de una URL corta a una larga:
 ```
 curl -X 'GET' \
   'http://localhost:8080/redirect/39d98096' \
   -H 'accept: */*'
 ```
+
 
 - Estadísticas (cantidad de accesos a una url corta)
 ```
@@ -79,12 +87,14 @@ curl -X 'GET' \
   -H 'accept: */*'
 ```
 
+
 - Habilitar o deshbilitar una url:
 ```
 curl -X 'PUT' \
   'http://localhost:8080/enable/39d98096?enable=false' \
   -H 'accept: */*'
 ```
+
 
 - Actualizar una URL larga:
 ```
