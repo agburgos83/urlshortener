@@ -11,6 +11,7 @@ Consta de una API REST más una BD Redis que permite:
 - Obtener estadísticas de acceso a URLs cortas (de momento solo cantidad de accesos)
 
 
+
 ### Siendo que en términos de rendimiento se busca contar con: 
 
 - Una alta disponibilidad con picos de tráfico de hasta 1 M RPM con un tiempo de actividad de hasta el 99,98%
@@ -22,6 +23,7 @@ Consta de una API REST más una BD Redis que permite:
   Se descartó el uso de una BD relacional por ofrecer un rendimiento inferior en altas cargas de datos y por ser tecnologías convenientes para el manejo de relaciones complejas entre tablas, algo innecesario en el contexto del proyecto.
 
 
+
   ## Componentes que integran la solución
 
 - API REST que acorta, redirige, administra y obtiene estadísticas de las URLS. Se optó por una API por ofrecer una interfaz sencilla para que clientes externos interactúen con el sistema.
@@ -30,13 +32,24 @@ Consta de una API REST más una BD Redis que permite:
   ![diagrama](https://github.com/user-attachments/assets/6d4125f4-6f02-4b5a-8059-45d0dd6bb8d4)
 
 
+
   ### Como probar la aplicación
 
   1) Descargate el proyecto
   2) El proyecto usa Java 17, Srping Boot 3.4.2 y Gradle 8.11.1
   3) Parate en la carpeta raíz del proyecto y ejecutá ./gradlew bootRun
   4) Con la aplicación andando, ingresá a http://localhost:8080/swagger-ui/index.html para probar los distintos endpoints (si querés ejecutarlos desde otra terminal con CURL más abajo te dejo los comandos)
-  6) Por último, podés probar las métricas del proyecto parándote en /urlshortener/src/load-tests y corriendo el comando k6 run load-test.js
+  5) Por último, podés probar las métricas del proyecto parándote en /urlshortener/src/load-tests y corriendo el comando k6 run load-test.js
+
+
+ 
+### Interactuando con Redis
+
+En una nueva termina ejecutá el comando `redi-cli` para trabajar directamente con la BD. Otros comandos:
+
+- `FLUSHALL`: vacía la base de datos
+- `keys *` te devuelve todas las claves existentes
+- `get url:{shortUrl}` ver con contenido de alguna clave en particular 
 
 
 ### Comandos cURL para probar la API
