@@ -1,6 +1,8 @@
 # UrlShortener
 
-## Proyecto Spring Boot diseñado para acortar URLs. Consta de una Api REST más una BD Redis que permite:
+## Proyecto Spring Boot diseñado para acortar URLs. 
+
+Consta de una API REST más una BD Redis que permite:
 
 - Acortar URLs
 - Redirigir desde URL cortas a su direción destino
