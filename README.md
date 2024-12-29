@@ -8,7 +8,7 @@ Consta de una API REST más una BD Redis que permite:
 - Acortar URLs
 - Redirigir desde URL cortas a su direción destino
 - Habilitar y deshabilitar URLs
-- Editar componentes de URL largas
+- Editar URLs largas
 - Obtener estadísticas de acceso a URLs cortas (de momento solo cantidad de accesos)
 
 
@@ -20,7 +20,7 @@ Consta de una API REST más una BD Redis que permite:
 - Una resolución de URLs con baja latencia
 - Estadísticas en tiempo casi real
 
- ... se optó por utilizar **Redis** por tratarse de una base de datos que opera en memoria y que por ende ofrece  tiemṕos de respuesta en el reango de milisegundos. Por otra parte Redis es muy eficiente al momento de almacenar pares de clave-valor (los mapeos entre *shortURL* y *longURL*). A su vez el soporte de estadísticas en tiempo real es una caracteristica de la base de datos elegida.
+ ... se optó por utilizar **Redis** por tratarse de una base de datos que opera en memoria y que por ende ofrece tiemṕos de respuesta en el rango de los milisegundos. Por otra parte Redis es muy eficiente al momento de almacenar pares de clave-valor (los mapeos entre *shortURL* y *longURL*). A su vez el soporte de estadísticas en tiempo real es una caracteristica de la base de datos elegida.
 
   Se descartó el uso de una BD relacional por ofrecer un rendimiento inferior en altas cargas de datos y por ser tecnologías convenientes para el manejo de relaciones complejas entre tablas, algo innecesario en el contexto del proyecto.
 
@@ -42,7 +42,7 @@ Consta de una API REST más una BD Redis que permite:
   1) Descargate el proyecto
   2) El proyecto usa Java 17, Srping Boot 3.4.2 y Gradle 8.11.1
   3) Parate en la carpeta raíz del proyecto y ejecutá ./gradlew bootRun
-  4) Con la aplicación andando, ingresá a http://localhost:8080/swagger-ui/index.html para probar los distintos endpoints (si querés ejecutarlos desde otra terminal con CURL más abajo te dejo los comandos)
+  4) Con la aplicación andando, ingresá a http://localhost:8080/swagger-ui/index.html para probar los distintos endpoints (si querés ejecutarlos con cURL más abajo te dejo los comandos)
   5) Por último, podés probar las métricas del proyecto parándote en /urlshortener/src/load-tests y corriendo el comando k6 run load-test.js
 
 
@@ -50,11 +50,11 @@ Consta de una API REST más una BD Redis que permite:
  
 ### Interactuando con Redis
 
-En una nueva termina ejecutá el comando `redi-cli` para trabajar directamente con la BD. Otros comandos:
+En una nueva terminal ejecutá el comando `REDIS-CLI` para trabajar directamente con la BD. Otros comandos:
 
 - `FLUSHALL`: vacía la base de datos
-- `keys *` te devuelve todas las claves existentes
-- `get url:{shortUrl}` ver con contenido de alguna clave en particular 
+- `KEYS *` te devuelve todas las claves existentes
+- `GET url:{shortUrl}` ver contenido de alguna clave en particular 
 
 
 
@@ -72,7 +72,7 @@ curl -X 'POST' \
 ```
 
 
-- Redireccionar de una URL corta a una larga:
+- Redireccionar una URL corta a una larga:
 ```
 curl -X 'GET' \
   'http://localhost:8080/redirect/39d98096' \
@@ -88,7 +88,7 @@ curl -X 'GET' \
 ```
 
 
-- Habilitar o deshbilitar una url:
+- Habilitar o deshbilitar una URL:
 ```
 curl -X 'PUT' \
   'http://localhost:8080/enable/39d98096?enable=false' \
